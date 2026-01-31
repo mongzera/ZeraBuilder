@@ -3,18 +3,18 @@ package com.chemicaldev.zerabuilder.query.mysql;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InsertBuilder {
+public class MySQLInsertBuilder {
 
     private String table;
     private String[] columns;
     private final List<Object> parameters = new ArrayList<>();
 
-    public InsertBuilder into(String table){
+    public MySQLInsertBuilder into(String table){
         this.table = table;
         return this;
     }
 
-    public InsertBuilder columns(String... columns){
+    public MySQLInsertBuilder columns(String... columns){
         this.columns = columns;
         return this;
     }
@@ -23,7 +23,7 @@ public class InsertBuilder {
      * Values to insert.
      * Stores them in parameters list and uses ? placeholders in SQL.
      */
-    public InsertBuilder values(Object... values){
+    public MySQLInsertBuilder values(Object... values){
         if(columns == null || columns.length != values.length){
             throw new IllegalArgumentException("Number of values must match number of columns");
         }

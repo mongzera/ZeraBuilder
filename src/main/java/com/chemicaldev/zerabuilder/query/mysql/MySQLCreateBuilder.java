@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class CreateBuilder {
+public class MySQLCreateBuilder {
 
     private String table;
     private final List<String> columns = new ArrayList<>();
@@ -12,19 +12,19 @@ public class CreateBuilder {
     private final List<String> uniqueKeys = new ArrayList<>();
 
     // Set table name
-    public CreateBuilder table(String table){
+    public MySQLCreateBuilder table(String table){
         this.table = table;
         return this;
     }
 
     // Add a column definition: "name TYPE"
-    public CreateBuilder column(String name, String type){
+    public MySQLCreateBuilder column(String name, String type){
         columns.add(name + " " + type);
         return this;
     }
 
     // Add primary key(s)
-    public CreateBuilder primaryKey(String... cols){
+    public MySQLCreateBuilder primaryKey(String... cols){
         for(String c : cols){
             primaryKeys.add(c);
         }
@@ -32,7 +32,7 @@ public class CreateBuilder {
     }
 
     // Add unique key(s)
-    public CreateBuilder unique(String... cols){
+    public MySQLCreateBuilder unique(String... cols){
         for(String c : cols){
             uniqueKeys.add(c);
         }

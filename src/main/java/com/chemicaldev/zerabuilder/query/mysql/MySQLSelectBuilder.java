@@ -1,9 +1,11 @@
 package com.chemicaldev.zerabuilder.query.mysql;
 
+import com.chemicaldev.zerabuilder.query.SelectBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectBuilder {
+public class MySQLSelectBuilder implements SelectBuilder {
 
     private String[] columns;
     private String table;
@@ -21,54 +23,54 @@ public class SelectBuilder {
 
     private final List<Object> parameters = new ArrayList<>();
 
-    public SelectBuilder select(String... columns){
+    public MySQLSelectBuilder select(String... columns){
         this.columns = columns;
         return this;
     }
 
-    public SelectBuilder from(String table){
+    public MySQLSelectBuilder from(String table){
         this.table = table;
         return this;
     }
 
-    public SelectBuilder join(String... joins){
+    public MySQLSelectBuilder join(String... joins){
         this.joins = joins;
         this.hasJoin = true;
         return this;
     }
 
-    public SelectBuilder where(String condition, Object... params){
+    public MySQLSelectBuilder where(String condition, Object... params){
         this.whereClause = condition;
         this.hasWhere = true;
         addParams(params);
         return this;
     }
 
-    public SelectBuilder and(String condition, Object... params){
+    public MySQLSelectBuilder and(String condition, Object... params){
         this.whereClause += " AND " + condition;
         addParams(params);
         return this;
     }
 
-    public SelectBuilder or(String condition, Object... params){
+    public MySQLSelectBuilder or(String condition, Object... params){
         this.whereClause += " OR " + condition;
         addParams(params);
         return this;
     }
 
-    public SelectBuilder groupBy(String... columns){
+    public MySQLSelectBuilder groupBy(String... columns){
         this.groupBy = columns;
         this.hasGroupBy = true;
         return this;
     }
 
-    public SelectBuilder orderBy(String... columns){
+    public MySQLSelectBuilder orderBy(String... columns){
         this.orderBy = columns;
         this.hasOrderBy = true;
         return this;
     }
 
-    public SelectBuilder limit(int limit){
+    public MySQLSelectBuilder limit(int limit){
         this.limit = limit;
         this.hasLimit = true;
         return this;

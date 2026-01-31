@@ -3,36 +3,36 @@ package com.chemicaldev.zerabuilder.query.mysql;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlterBuilder {
+public class MySQLAlterBuilder {
 
     private String table;
     private final List<String> actions = new ArrayList<>();
 
     // Constructor sets table
-    public AlterBuilder(String table){
+    public MySQLAlterBuilder(String table){
         this.table = table;
     }
 
     // Add column
-    public AlterBuilder addColumn(String name, String type){
+    public MySQLAlterBuilder addColumn(String name, String type){
         actions.add("ADD COLUMN " + name + " " + type);
         return this;
     }
 
     // Drop column
-    public AlterBuilder dropColumn(String name){
+    public MySQLAlterBuilder dropColumn(String name){
         actions.add("DROP COLUMN " + name);
         return this;
     }
 
     // Rename column
-    public AlterBuilder renameColumn(String oldName, String newName){
+    public MySQLAlterBuilder renameColumn(String oldName, String newName){
         actions.add("RENAME COLUMN " + oldName + " TO " + newName);
         return this;
     }
 
     // Rename table
-    public AlterBuilder renameTable(String newName){
+    public MySQLAlterBuilder renameTable(String newName){
         actions.add("RENAME TO " + newName);
         return this;
     }

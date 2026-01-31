@@ -1,13 +1,13 @@
 package com.chemicaldev.zerabuilder.dsl;
 
-import com.chemicaldev.zerabuilder.query.mysql.CreateBuilder;
+import com.chemicaldev.zerabuilder.query.mysql.MySQLCreateBuilder;
 
 public class CreateDSL {
 
-    private final CreateBuilder builder;
+    private final MySQLCreateBuilder builder;
 
     public CreateDSL(){
-        this.builder = new CreateBuilder();
+        this.builder = new MySQLCreateBuilder();
     }
 
     public CreateDSL table(String tableName){
@@ -30,7 +30,7 @@ public class CreateDSL {
         return this;
     }
 
-    public CreateBuilder build(){
+    public MySQLCreateBuilder build(){
         return builder;
     }
 

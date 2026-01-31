@@ -1,4 +1,6 @@
 import com.chemicaldev.zerabuilder.dsl.*;
+import com.chemicaldev.zerabuilder.main.SQLDialect;
+import com.chemicaldev.zerabuilder.main.ZeraBuilder;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,7 +8,11 @@ public class DSLTest {
 
     @Test
     public void testSelectDSL() {
-        SelectDSL select = new SelectDSL(null)
+        ZeraBuilder builder = new ZeraBuilder();
+        builder.dialect = SQLDialect.MYSQL;
+
+
+        SelectDSL select = new SelectDSL(builder)
                 .list("id", "name")
                 .from("users")
                 .where(Conditions.eq("status", "ACTIVE"))
@@ -19,6 +25,29 @@ public class DSLTest {
 
         Object[] expectedParams = {"ACTIVE", 18};
         assertArrayEquals(expectedParams, select.getParams());
+    }
+
+    @Test
+    public void testSelectDSLSQLite(){
+        ZeraBuilder builder = new ZeraBuilder();
+        builder.dialect = SQLDialect.SQLITE;
+
+        SelectDSL select = new SelectDSL(builder)
+                .list("id", "name", "email")
+                .from("users")
+                .where(Conditions.eq("status", "ACTIVE"))
+                .and(Conditions.gt("age", 18))
+                .or(Conditions.eq("role", "admin"))
+                .groupBy("role")
+                .orderBy("name")
+                .limit(5);
+
+        String expectedSql = "SELECT id, name, email FROM users WHERE ((status = ? AND age > ?) OR role = ?) GROUP BY role ORDER BY name LIMIT 5;";
+        assertEquals(expectedSql, select.toString());
+
+        Object[] expectedParams = {"ACTIVE", 18, "admin"};
+        assertArrayEquals(expectedParams, select.getParams());
+
     }
 
     @Test

@@ -1,13 +1,13 @@
 package com.chemicaldev.zerabuilder.dsl;
 
-import com.chemicaldev.zerabuilder.query.mysql.InsertBuilder;
+import com.chemicaldev.zerabuilder.query.mysql.MySQLInsertBuilder;
 
 public class InsertDSL {
 
-    private final InsertBuilder builder;
+    private final MySQLInsertBuilder builder;
 
     public InsertDSL(){
-        this.builder = new InsertBuilder();
+        this.builder = new MySQLInsertBuilder();
     }
 
     public InsertDSL into(String table){
@@ -25,7 +25,7 @@ public class InsertDSL {
         return this;
     }
 
-    public InsertBuilder build(){
+    public MySQLInsertBuilder build(){
         return builder;
     }
 

@@ -1,12 +1,14 @@
 package com.chemicaldev.zerabuilder.dsl;
 
 import com.chemicaldev.zerabuilder.main.ZeraBuilder;
-import com.chemicaldev.zerabuilder.query.mysql.SelectBuilder;
+import com.chemicaldev.zerabuilder.query.SelectBuilder;
+import com.chemicaldev.zerabuilder.query.mysql.MySQLSelectBuilder;
+import com.chemicaldev.zerabuilder.query.sqlite.SQLiteSelectBuilder;
 
 /**
  * DSL wrapper for SELECT queries.
- * Currently uses MySQL SelectBuilder.
- * Future plan: create SelectBuilder interface + multiple DB implementations.
+ * Currently uses MySQL MySQLSelectBuilder.
+ * Future plan: create MySQLSelectBuilder interface + multiple DB implementations.
  */
 
 public class SelectDSL {
@@ -16,7 +18,11 @@ public class SelectDSL {
 
     public SelectDSL(ZeraBuilder _instance){
         this._instance = _instance;
-        this.selectBuilder = new SelectBuilder();
+        this.selectBuilder = switch (_instance.dialect){
+            case MYSQL -> new MySQLSelectBuilder();
+            case SQLITE -> new SQLiteSelectBuilder();
+            case POSTRESQL -> null;
+        };
     }
 
     // SELECT columns
@@ -83,9 +89,5 @@ public class SelectDSL {
     public Object[] getParams(){
         return selectBuilder.getParameters();
     }
-
-    // Expose underlying builder for advanced use or compilation
-    public SelectBuilder build(){
-        return selectBuilder;
-    }
+    
 }

@@ -1,13 +1,13 @@
 package com.chemicaldev.zerabuilder.dsl;
 
-import com.chemicaldev.zerabuilder.query.mysql.DeleteBuilder;
+import com.chemicaldev.zerabuilder.query.mysql.MySQLDeleteBuilder;
 
 public class DeleteDSL {
 
-    private final DeleteBuilder builder;
+    private final MySQLDeleteBuilder builder;
 
     public DeleteDSL(){
-        this.builder = new DeleteBuilder();
+        this.builder = new MySQLDeleteBuilder();
     }
 
     public DeleteDSL from(String table){
@@ -30,7 +30,7 @@ public class DeleteDSL {
         return this;
     }
 
-    public DeleteBuilder build(){
+    public MySQLDeleteBuilder build(){
         return builder;
     }
 

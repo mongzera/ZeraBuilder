@@ -3,7 +3,7 @@ package com.chemicaldev.zerabuilder.query.mysql;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeleteBuilder {
+public class MySQLDeleteBuilder {
 
     private String table;
     private String whereClause;
@@ -11,13 +11,13 @@ public class DeleteBuilder {
 
     private final List<Object> parameters = new ArrayList<>();
 
-    public DeleteBuilder from(String table){
+    public MySQLDeleteBuilder from(String table){
         this.table = table;
         return this;
     }
 
     // Initial WHERE
-    public DeleteBuilder where(String condition, Object... params){
+    public MySQLDeleteBuilder where(String condition, Object... params){
         this.whereClause = condition;
         this.hasWhere = true;
         addParams(params);
@@ -25,7 +25,7 @@ public class DeleteBuilder {
     }
 
     // Append AND condition
-    public DeleteBuilder and(String condition, Object... params){
+    public MySQLDeleteBuilder and(String condition, Object... params){
         if (!hasWhere) throw new IllegalStateException("Cannot call 'and' before 'where'");
         this.whereClause += " AND " + condition;
         addParams(params);
@@ -33,7 +33,7 @@ public class DeleteBuilder {
     }
 
     // Append OR condition
-    public DeleteBuilder or(String condition, Object... params){
+    public MySQLDeleteBuilder or(String condition, Object... params){
         if (!hasWhere) throw new IllegalStateException("Cannot call 'or' before 'where'");
         this.whereClause += " OR " + condition;
         addParams(params);

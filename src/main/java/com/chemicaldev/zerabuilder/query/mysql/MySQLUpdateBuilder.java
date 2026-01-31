@@ -3,7 +3,7 @@ package com.chemicaldev.zerabuilder.query.mysql;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateBuilder {
+public class MySQLUpdateBuilder {
 
     private String table;
     private final List<String> setClauses = new ArrayList<>();
@@ -13,7 +13,7 @@ public class UpdateBuilder {
     private final List<Object> parameters = new ArrayList<>();
 
     /** Set the table to update */
-    public UpdateBuilder update(String table){
+    public MySQLUpdateBuilder update(String table){
         this.table = table;
         return this;
     }
@@ -22,7 +22,7 @@ public class UpdateBuilder {
      * Set column/value pairs.
      * Example: set("name", "Alice"), set("age", 30)
      */
-    public UpdateBuilder set(String column, Object value){
+    public MySQLUpdateBuilder set(String column, Object value){
         setClauses.add(column + " = ?");
         parameters.add(value);
         return this;
@@ -32,7 +32,7 @@ public class UpdateBuilder {
      * Initial WHERE clause using a raw string and parameters
      * (called by DSL)
      */
-    public UpdateBuilder where(String condition, Object... params){
+    public MySQLUpdateBuilder where(String condition, Object... params){
         this.whereClause = condition;
         this.hasWhere = true;
         addParams(params);
@@ -40,7 +40,7 @@ public class UpdateBuilder {
     }
 
     /** Append AND condition */
-    public UpdateBuilder and(String condition, Object... params){
+    public MySQLUpdateBuilder and(String condition, Object... params){
         if(!hasWhere) throw new IllegalStateException("Cannot call 'and' before 'where'");
         this.whereClause += " AND " + condition;
         addParams(params);
@@ -48,7 +48,7 @@ public class UpdateBuilder {
     }
 
     /** Append OR condition */
-    public UpdateBuilder or(String condition, Object... params){
+    public MySQLUpdateBuilder or(String condition, Object... params){
         if(!hasWhere) throw new IllegalStateException("Cannot call 'or' before 'where'");
         this.whereClause += " OR " + condition;
         addParams(params);

@@ -1,13 +1,13 @@
 package com.chemicaldev.zerabuilder.dsl;
 
-import com.chemicaldev.zerabuilder.query.mysql.UpdateBuilder;
+import com.chemicaldev.zerabuilder.query.mysql.MySQLUpdateBuilder;
 
 public class UpdateDSL {
 
-    private final UpdateBuilder builder;
+    private final MySQLUpdateBuilder builder;
 
     public UpdateDSL(){
-        this.builder = new UpdateBuilder();
+        this.builder = new MySQLUpdateBuilder();
     }
 
     public UpdateDSL table(String table){
@@ -43,7 +43,7 @@ public class UpdateDSL {
         return this;
     }
 
-    public UpdateBuilder build(){
+    public MySQLUpdateBuilder build(){
         return builder;
     }
 

@@ -1,13 +1,13 @@
 package com.chemicaldev.zerabuilder.dsl;
 
-import com.chemicaldev.zerabuilder.query.mysql.AlterBuilder;
+import com.chemicaldev.zerabuilder.query.mysql.MySQLAlterBuilder;
 
 public class AlterDSL {
 
-    private final AlterBuilder builder;
+    private final MySQLAlterBuilder builder;
 
     public AlterDSL(String table){
-        this.builder = new AlterBuilder(table);
+        this.builder = new MySQLAlterBuilder(table);
     }
 
     public AlterDSL addColumn(String name, String type){
@@ -30,7 +30,7 @@ public class AlterDSL {
         return this;
     }
 
-    public AlterBuilder build(){
+    public MySQLAlterBuilder build(){
         return builder;
     }
 

@@ -1,7 +1,6 @@
 package com.chemicaldev.zerabuilder.main;
 
 import com.chemicaldev.zerabuilder.dsl.SelectDSL;
-import com.chemicaldev.zerabuilder.query.mysql.SelectBuilder;
 
 public class ZeraBuilder {
     public SQLDialect dialect = SQLDialect.MYSQL;
