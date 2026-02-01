@@ -1,58 +1,69 @@
 package com.chemicaldev.zerabuilder.dsl;
 
+import com.chemicaldev.zerabuilder.main.ZeraBuilder;
+import com.chemicaldev.zerabuilder.query.UpdateBuilder;
+import com.chemicaldev.zerabuilder.query.mysql.MySQLInsertBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLUpdateBuilder;
+import com.chemicaldev.zerabuilder.query.sqlite.SQLiteInsertBuilder;
+import com.chemicaldev.zerabuilder.query.sqlite.SQLiteUpdateBuilder;
 
 public class UpdateDSL {
 
-    private final MySQLUpdateBuilder builder;
+    private final ZeraBuilder _instance;
+    private final UpdateBuilder updateBuilder;
 
-    public UpdateDSL(){
-        this.builder = new MySQLUpdateBuilder();
+    public UpdateDSL(ZeraBuilder _instance){
+        this._instance = _instance;
+        this.updateBuilder = switch (_instance.dialect){
+            case MYSQL -> new MySQLUpdateBuilder();
+            case SQLITE -> new SQLiteUpdateBuilder();
+            case POSTRESQL -> null;
+        };
     }
 
     public UpdateDSL table(String table){
-        builder.update(table);
+        updateBuilder.update(table);
         return this;
     }
 
     public UpdateDSL set(String[] columns, Object... values){
         for(int i = 0; i < columns.length; i++){
-            builder.set(columns[i], values[i]);
+            updateBuilder.set(columns[i], values[i]);
         }
         return this;
     }
 
     public UpdateDSL set(String column, Object value){
-        builder.set(column, value);
+        updateBuilder.set(column, value);
 
         return this;
     }
 
     public UpdateDSL where(Condition condition){
-        builder.where(condition.toSql(), condition.getParameters());
+        updateBuilder.where(condition.toSql(), condition.getParameters());
         return this;
     }
 
     public UpdateDSL and(Condition condition){
-        builder.and(condition.toSql(), condition.getParameters());
+        updateBuilder.and(condition.toSql(), condition.getParameters());
         return this;
     }
 
     public UpdateDSL or(Condition condition){
-        builder.or(condition.toSql(), condition.getParameters());
+        updateBuilder.or(condition.toSql(), condition.getParameters());
         return this;
     }
 
-    public MySQLUpdateBuilder build(){
-        return builder;
+    public UpdateBuilder build(){
+        return updateBuilder;
     }
 
     @Override
     public String toString(){
-        return builder.toString();
+        return updateBuilder.toString();
     }
 
     public Object[] getParams(){
-        return builder.getParameters();
+        return updateBuilder.getParameters();
     }
 }

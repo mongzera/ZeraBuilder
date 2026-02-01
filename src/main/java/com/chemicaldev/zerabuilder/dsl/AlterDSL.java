@@ -1,13 +1,28 @@
 package com.chemicaldev.zerabuilder.dsl;
 
+import com.chemicaldev.zerabuilder.main.ZeraBuilder;
+import com.chemicaldev.zerabuilder.query.AlterBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLAlterBuilder;
+import com.chemicaldev.zerabuilder.query.mysql.MySQLDeleteBuilder;
+import com.chemicaldev.zerabuilder.query.sqlite.SQLiteAlterBuilder;
+import com.chemicaldev.zerabuilder.query.sqlite.SQLiteDeleteBuilder;
 
 public class AlterDSL {
+    private final ZeraBuilder _instance;
+    private final AlterBuilder builder;
 
-    private final MySQLAlterBuilder builder;
+    public AlterDSL(ZeraBuilder _instance){
+        this._instance = _instance;
+        this.builder = switch (_instance.dialect){
+            case MYSQL -> new MySQLAlterBuilder();
+            case SQLITE -> new SQLiteAlterBuilder();
+            case POSTRESQL -> null;
+        };
+    }
 
-    public AlterDSL(String table){
-        this.builder = new MySQLAlterBuilder(table);
+    public AlterDSL table(String table){
+        builder.table(table);
+        return this;
     }
 
     public AlterDSL addColumn(String name, String type){
@@ -17,6 +32,11 @@ public class AlterDSL {
 
     public AlterDSL dropColumn(String name){
         builder.dropColumn(name);
+        return this;
+    }
+
+    public AlterDSL modifyColumn(String name, String type){
+        builder.modifyColumn(name, type);
         return this;
     }
 
@@ -30,7 +50,7 @@ public class AlterDSL {
         return this;
     }
 
-    public MySQLAlterBuilder build(){
+    public AlterBuilder build(){
         return builder;
     }
 

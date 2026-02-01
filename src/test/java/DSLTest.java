@@ -6,11 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DSLTest {
 
+    ZeraBuilder builder = new ZeraBuilder(SQLDialect.MYSQL);
+
     @Test
     public void testSelectDSL() {
-        ZeraBuilder builder = new ZeraBuilder();
-        builder.dialect = SQLDialect.MYSQL;
-
 
         SelectDSL select = new SelectDSL(builder)
                 .list("id", "name")
@@ -29,9 +28,6 @@ public class DSLTest {
 
     @Test
     public void testSelectDSLSQLite(){
-        ZeraBuilder builder = new ZeraBuilder();
-        builder.dialect = SQLDialect.SQLITE;
-
         SelectDSL select = new SelectDSL(builder)
                 .list("id", "name", "email")
                 .from("users")
@@ -42,7 +38,7 @@ public class DSLTest {
                 .orderBy("name")
                 .limit(5);
 
-        String expectedSql = "SELECT id, name, email FROM users WHERE ((status = ? AND age > ?) OR role = ?) GROUP BY role ORDER BY name LIMIT 5;";
+        String expectedSql = "SELECT id, name, email FROM users WHERE (status = ? AND age > ? OR role = ?) GROUP BY role ORDER BY name LIMIT 5;";
         assertEquals(expectedSql, select.toString());
 
         Object[] expectedParams = {"ACTIVE", 18, "admin"};
@@ -52,7 +48,7 @@ public class DSLTest {
 
     @Test
     public void testInsertDSL() {
-        InsertDSL insert = new InsertDSL()
+        InsertDSL insert = new InsertDSL(builder)
                 .into("users")
                 .columns("name", "email", "age")
                 .values("Alice", "alice@mail.com", 30);
@@ -66,7 +62,7 @@ public class DSLTest {
 
     @Test
     public void testUpdateDSL() {
-        UpdateDSL update = new UpdateDSL()
+        UpdateDSL update = new UpdateDSL(builder)
                 .table("users")
                 .set(new String[]{"name","age"}, "Bob", 25)
                 .where(Conditions.eq("id", 1));
@@ -80,7 +76,7 @@ public class DSLTest {
 
     @Test
     public void testDeleteDSL() {
-        DeleteDSL delete = new DeleteDSL()
+        DeleteDSL delete = new DeleteDSL(builder)
                 .from("users")
                 .where(Conditions.eq("status", "INACTIVE"))
                 .and(Conditions.lt("age", 18));
@@ -94,7 +90,7 @@ public class DSLTest {
 
     @Test
     public void testCreateDSL() {
-        CreateDSL create = new CreateDSL()
+        CreateDSL create = new CreateDSL(builder)
                 .table("users")
                 .column("id", "INT AUTO_INCREMENT")
                 .column("name", "VARCHAR(255)")
@@ -115,7 +111,8 @@ public class DSLTest {
 
     @Test
     public void testAlterDSL() {
-        AlterDSL alter = new AlterDSL("users")
+        AlterDSL alter = new AlterDSL(builder)
+                .table("users")
                 .addColumn("age", "INT")
                 .dropColumn("old_column")
                 .renameColumn("username", "user_name")

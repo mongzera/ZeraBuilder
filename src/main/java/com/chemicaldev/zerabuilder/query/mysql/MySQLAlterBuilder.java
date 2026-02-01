@@ -1,16 +1,18 @@
 package com.chemicaldev.zerabuilder.query.mysql;
 
+import com.chemicaldev.zerabuilder.query.AlterBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySQLAlterBuilder {
+public class MySQLAlterBuilder implements AlterBuilder {
 
     private String table;
     private final List<String> actions = new ArrayList<>();
 
-    // Constructor sets table
-    public MySQLAlterBuilder(String table){
+    public MySQLAlterBuilder table(String table){
         this.table = table;
+        return this;
     }
 
     // Add column
@@ -23,6 +25,11 @@ public class MySQLAlterBuilder {
     public MySQLAlterBuilder dropColumn(String name){
         actions.add("DROP COLUMN " + name);
         return this;
+    }
+
+    @Override
+    public AlterBuilder modifyColumn(String name, String type) {
+        return null;
     }
 
     // Rename column

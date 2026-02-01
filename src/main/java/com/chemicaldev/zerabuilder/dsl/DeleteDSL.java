@@ -1,45 +1,54 @@
 package com.chemicaldev.zerabuilder.dsl;
 
+import com.chemicaldev.zerabuilder.main.ZeraBuilder;
+import com.chemicaldev.zerabuilder.query.DeleteBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLDeleteBuilder;
+import com.chemicaldev.zerabuilder.query.sqlite.SQLiteDeleteBuilder;
 
 public class DeleteDSL {
 
-    private final MySQLDeleteBuilder builder;
+    private final ZeraBuilder _instance;
+    private final DeleteBuilder deleteBuilder;
 
-    public DeleteDSL(){
-        this.builder = new MySQLDeleteBuilder();
+    public DeleteDSL(ZeraBuilder _instance){
+        this._instance = _instance;
+        this.deleteBuilder = switch (_instance.dialect){
+            case MYSQL -> new MySQLDeleteBuilder();
+            case SQLITE -> new SQLiteDeleteBuilder();
+            case POSTRESQL -> null;
+        };
     }
 
     public DeleteDSL from(String table){
-        builder.from(table);
+        deleteBuilder.from(table);
         return this;
     }
 
     public DeleteDSL where(Condition condition){
-        builder.where(condition.toSql(), condition.getParameters());
+        deleteBuilder.where(condition.toSql(), condition.getParameters());
         return this;
     }
 
     public DeleteDSL and(Condition condition){
-        builder.and(condition.toSql(), condition.getParameters());
+        deleteBuilder.and(condition.toSql(), condition.getParameters());
         return this;
     }
 
     public DeleteDSL or(Condition condition){
-        builder.or(condition.toSql(), condition.getParameters());
+        deleteBuilder.or(condition.toSql(), condition.getParameters());
         return this;
     }
 
-    public MySQLDeleteBuilder build(){
-        return builder;
+    public DeleteBuilder build(){
+        return deleteBuilder;
     }
 
     @Override
     public String toString(){
-        return builder.toString();
+        return deleteBuilder.toString();
     }
 
     public Object[] getParams(){
-        return builder.getParameters();
+        return deleteBuilder.getParameters();
     }
 }

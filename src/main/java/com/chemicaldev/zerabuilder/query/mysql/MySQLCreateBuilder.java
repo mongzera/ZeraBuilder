@@ -1,10 +1,12 @@
 package com.chemicaldev.zerabuilder.query.mysql;
 
+import com.chemicaldev.zerabuilder.query.CreateBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class MySQLCreateBuilder {
+public class MySQLCreateBuilder implements CreateBuilder {
 
     private String table;
     private final List<String> columns = new ArrayList<>();
@@ -17,9 +19,21 @@ public class MySQLCreateBuilder {
         return this;
     }
 
+
+    public MySQLCreateBuilder column(String name, String type, String constraint){
+        return this.column(name + " " + type + " " + constraint);
+    }
+
     // Add a column definition: "name TYPE"
     public MySQLCreateBuilder column(String name, String type){
-        columns.add(name + " " + type);
+        return this.column(name + " " + type);
+    }
+
+
+
+    @Override
+    public MySQLCreateBuilder column(String definition){
+        columns.add(definition);
         return this;
     }
 

@@ -1,9 +1,11 @@
 package com.chemicaldev.zerabuilder.query.mysql;
 
+import com.chemicaldev.zerabuilder.query.InsertBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySQLInsertBuilder {
+public class MySQLInsertBuilder implements InsertBuilder {
 
     private String table;
     private String[] columns;

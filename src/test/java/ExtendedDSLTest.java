@@ -1,13 +1,18 @@
 import com.chemicaldev.zerabuilder.dsl.*;
+import com.chemicaldev.zerabuilder.main.SQLDialect;
+import com.chemicaldev.zerabuilder.main.ZeraBuilder;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ExtendedDSLTest {
+    ZeraBuilder builder = new ZeraBuilder(SQLDialect.MYSQL);
 
     // -------------------- SELECT --------------------
     @Test
     public void testSelectDSLComplexConditions() {
-        SelectDSL select = new SelectDSL(null)
+
+
+        SelectDSL select = new SelectDSL(builder)
                 .list("id", "name", "email")
                 .from("users")
                 .where(Conditions.eq("status", "ACTIVE"))
@@ -27,7 +32,7 @@ public class ExtendedDSLTest {
     // -------------------- INSERT --------------------
     @Test
     public void testInsertDSLMultipleColumns() {
-        InsertDSL insert = new InsertDSL()
+        InsertDSL insert = new InsertDSL(builder)
                 .into("users")
                 .columns("name", "email", "age", "role")
                 .values("Alice", "alice@mail.com", 30, "user");
@@ -42,7 +47,7 @@ public class ExtendedDSLTest {
     // -------------------- UPDATE --------------------
     @Test
     public void testUpdateDSLMultipleSets() {
-        UpdateDSL update = new UpdateDSL()
+        UpdateDSL update = new UpdateDSL(builder)
                 .table("users")
                 .set(new String[]{"name","email"}, "Bob", "bob@mail.com")
                 .set("age", 35)
@@ -59,7 +64,7 @@ public class ExtendedDSLTest {
     // -------------------- DELETE --------------------
     @Test
     public void testDeleteDSLMultipleConditions() {
-        DeleteDSL delete = new DeleteDSL()
+        DeleteDSL delete = new DeleteDSL(builder)
                 .from("users")
                 .where(Conditions.eq("status", "INACTIVE"))
                 .and(Conditions.lt("age", 18))
@@ -75,7 +80,7 @@ public class ExtendedDSLTest {
     // -------------------- CREATE --------------------
     @Test
     public void testCreateDSLMultipleConstraints() {
-        CreateDSL create = new CreateDSL()
+        CreateDSL create = new CreateDSL(builder)
                 .table("users")
                 .column("id", "INT AUTO_INCREMENT")
                 .column("name", "VARCHAR(255)")
@@ -100,7 +105,8 @@ public class ExtendedDSLTest {
     // -------------------- ALTER --------------------
     @Test
     public void testAlterDSLMultipleActions() {
-        AlterDSL alter = new AlterDSL("users")
+        AlterDSL alter = new AlterDSL(builder)
+                .table("users")
                 .addColumn("age", "INT")
                 .addColumn("last_login", "DATETIME")
                 .dropColumn("old_column")
@@ -114,7 +120,7 @@ public class ExtendedDSLTest {
     // -------------------- EDGE CASES --------------------
     @Test
     public void testEmptyWhereThrows() {
-        DeleteDSL delete = new DeleteDSL().from("users");
+        DeleteDSL delete = new DeleteDSL(builder).from("users");
         // No where, should not throw, just generate DELETE FROM users;
         String expectedSql = "DELETE FROM users;";
         assertEquals(expectedSql, delete.build().toString());
@@ -122,7 +128,7 @@ public class ExtendedDSLTest {
 
     @Test
     public void testUpdateWithoutSetThrows() {
-        UpdateDSL update = new UpdateDSL().table("users").where(Conditions.eq("id", 1));
+        UpdateDSL update = new UpdateDSL(builder).table("users").where(Conditions.eq("id", 1));
         Exception exception = assertThrows(IllegalStateException.class, update::toString);
         assertTrue(exception.getMessage().contains("Table and at least one SET clause must be specified"));
     }

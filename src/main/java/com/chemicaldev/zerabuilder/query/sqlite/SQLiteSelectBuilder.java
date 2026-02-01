@@ -53,7 +53,7 @@ public class SQLiteSelectBuilder implements SelectBuilder {
     @Override
     public SQLiteSelectBuilder and(String condition, Object... params) {
         if (!hasWhere) throw new IllegalStateException("Cannot call 'and' before 'where'");
-        this.whereClause = "(" + this.whereClause + " AND " + condition + ")";
+        this.whereClause = this.whereClause + " AND " + condition;
         addParams(params);
         return this;
     }

@@ -1,9 +1,11 @@
 package com.chemicaldev.zerabuilder.query.mysql;
 
+import com.chemicaldev.zerabuilder.query.UpdateBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySQLUpdateBuilder {
+public class MySQLUpdateBuilder implements UpdateBuilder {
 
     private String table;
     private final List<String> setClauses = new ArrayList<>();

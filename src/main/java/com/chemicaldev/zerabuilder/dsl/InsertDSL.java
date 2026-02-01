@@ -1,40 +1,52 @@
 package com.chemicaldev.zerabuilder.dsl;
 
+import com.chemicaldev.zerabuilder.main.ZeraBuilder;
+import com.chemicaldev.zerabuilder.query.InsertBuilder;
+import com.chemicaldev.zerabuilder.query.SelectBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLInsertBuilder;
+import com.chemicaldev.zerabuilder.query.mysql.MySQLSelectBuilder;
+import com.chemicaldev.zerabuilder.query.sqlite.SQLiteInsertBuilder;
+import com.chemicaldev.zerabuilder.query.sqlite.SQLiteSelectBuilder;
 
 public class InsertDSL {
 
-    private final MySQLInsertBuilder builder;
+    private final ZeraBuilder _instance;
+    private final InsertBuilder insertBuilder;
 
-    public InsertDSL(){
-        this.builder = new MySQLInsertBuilder();
+    public InsertDSL(ZeraBuilder _instance){
+        this._instance = _instance;
+        this.insertBuilder = switch (_instance.dialect){
+            case MYSQL -> new MySQLInsertBuilder();
+            case SQLITE -> new SQLiteInsertBuilder();
+            case POSTRESQL -> null;
+        };
     }
 
     public InsertDSL into(String table){
-        builder.into(table);
+        insertBuilder.into(table);
         return this;
     }
 
     public InsertDSL columns(String... columns){
-        builder.columns(columns);
+        insertBuilder.columns(columns);
         return this;
     }
 
     public InsertDSL values(Object... values){
-        builder.values(values);
+        insertBuilder.values(values);
         return this;
     }
 
-    public MySQLInsertBuilder build(){
-        return builder;
+    public InsertBuilder build(){
+        return insertBuilder;
     }
 
     @Override
     public String toString(){
-        return builder.toString();
+        return insertBuilder.toString();
     }
 
     public Object[] getParams(){
-        return builder.getParameters();
+        return insertBuilder.getParameters();
     }
 }

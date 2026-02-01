@@ -1,9 +1,11 @@
 package com.chemicaldev.zerabuilder.query.mysql;
 
+import com.chemicaldev.zerabuilder.query.DeleteBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySQLDeleteBuilder {
+public class MySQLDeleteBuilder implements DeleteBuilder {
 
     private String table;
     private String whereClause;
