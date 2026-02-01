@@ -22,6 +22,8 @@ public class SQLiteInsertBuilder implements InsertBuilder {
     }
 
     public SQLiteInsertBuilder values(Object... values){
+        parameters.clear(); // IMPORTANT!, clear first!
+
         for(Object v : values){
             parameters.add(v);
         }

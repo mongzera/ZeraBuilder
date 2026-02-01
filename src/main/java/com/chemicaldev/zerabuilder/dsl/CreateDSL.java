@@ -6,7 +6,7 @@ import com.chemicaldev.zerabuilder.query.CreateBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLCreateBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteCreateBuilder;
 
-public class CreateDSL {
+public class CreateDSL implements ExecutableDSL{
 
     private final ZeraBuilder _instance;
     private final CreateBuilder createBuilder;
@@ -53,5 +53,15 @@ public class CreateDSL {
     @Override
     public String toString(){
         return createBuilder.toString();
+    }
+
+    @Override
+    public Object[] getParameters() {
+        return null;
+    }
+
+    @Override
+    public ExecutionType type() {
+        return ExecutionType.UPDATE;
     }
 }

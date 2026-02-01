@@ -23,7 +23,7 @@ public class DSLTest {
         assertEquals(expectedSql, select.toString());
 
         Object[] expectedParams = {"ACTIVE", 18};
-        assertArrayEquals(expectedParams, select.getParams());
+        assertArrayEquals(expectedParams, select.getParameters());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class DSLTest {
         assertEquals(expectedSql, select.toString());
 
         Object[] expectedParams = {"ACTIVE", 18, "admin"};
-        assertArrayEquals(expectedParams, select.getParams());
+        assertArrayEquals(expectedParams, select.getParameters());
 
     }
 
@@ -57,7 +57,7 @@ public class DSLTest {
         assertEquals(expectedSql, insert.build().toString());
 
         Object[] expectedParams = {"Alice", "alice@mail.com", 30};
-        assertArrayEquals(expectedParams, insert.getParams());
+        assertArrayEquals(expectedParams, insert.getParameters());
     }
 
     @Test

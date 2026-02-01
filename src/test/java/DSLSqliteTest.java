@@ -25,7 +25,7 @@ public class DSLSqliteTest {
 
         assertArrayEquals(
                 new Object[]{"ACTIVE", 18},
-                select.getParams()
+                select.getParameters()
         );
     }
 
@@ -43,7 +43,7 @@ public class DSLSqliteTest {
 
         assertArrayEquals(
                 new Object[]{"Alice", "alice@test.com"},
-                insert.getParams()
+                insert.getParameters()
         );
     }
 

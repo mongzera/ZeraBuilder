@@ -26,7 +26,7 @@ public class ExtendedDSLTest {
         assertEquals(expectedSql, select.toString());
 
         Object[] expectedParams = {"ACTIVE", 18, "admin"};
-        assertArrayEquals(expectedParams, select.getParams());
+        assertArrayEquals(expectedParams, select.getParameters());
     }
 
     // -------------------- INSERT --------------------
@@ -41,7 +41,7 @@ public class ExtendedDSLTest {
         assertEquals(expectedSql, insert.build().toString());
 
         Object[] expectedParams = {"Alice", "alice@mail.com", 30, "user"};
-        assertArrayEquals(expectedParams, insert.getParams());
+        assertArrayEquals(expectedParams, insert.getParameters());
     }
 
     // -------------------- UPDATE --------------------

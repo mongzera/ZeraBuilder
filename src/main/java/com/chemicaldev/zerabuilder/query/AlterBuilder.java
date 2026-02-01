@@ -1,6 +1,6 @@
 package com.chemicaldev.zerabuilder.query;
 
-public interface AlterBuilder {
+public interface AlterBuilder extends Builder{
 
     AlterBuilder table(String table);
     AlterBuilder addColumn(String name, String type);
@@ -9,5 +9,4 @@ public interface AlterBuilder {
     AlterBuilder renameColumn(String oldName, String newName);
     AlterBuilder renameTable(String newName);
 
-    String toString();
 }

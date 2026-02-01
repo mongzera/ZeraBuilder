@@ -40,7 +40,7 @@ public class ExtendedDSLSqliteTest {
 
         assertArrayEquals(
                 new Object[]{"ACTIVE", 18, "admin"},
-                dsl.getParams()
+                dsl.getParameters()
         );
     }
 

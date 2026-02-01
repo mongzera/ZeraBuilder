@@ -1,6 +1,6 @@
 package com.chemicaldev.zerabuilder.query;
 
-public interface UpdateBuilder {
+public interface UpdateBuilder extends ParameterizedBuilder{
     UpdateBuilder update(String table);
     UpdateBuilder set(String column, Object value);
 
@@ -8,6 +8,4 @@ public interface UpdateBuilder {
     UpdateBuilder and(String condition, Object... params);
     UpdateBuilder or(String condition, Object... params);
 
-    Object[] getParameters();
-    String toString();
 }

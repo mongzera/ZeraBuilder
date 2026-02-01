@@ -11,7 +11,7 @@ import com.chemicaldev.zerabuilder.query.sqlite.SQLiteSelectBuilder;
  * Future plan: create MySQLSelectBuilder interface + multiple DB implementations.
  */
 
-public class SelectDSL {
+public class SelectDSL implements ExecutableDSL{
 
     private final ZeraBuilder _instance;
     private final SelectBuilder selectBuilder;
@@ -85,8 +85,15 @@ public class SelectDSL {
         return selectBuilder.toString();
     }
 
+
+    @Override
+    public ExecutionType type() {
+        return ExecutionType.QUERY;
+    }
+
     // Expose parameters array
-    public Object[] getParams(){
+    @Override
+    public Object[] getParameters(){
         return selectBuilder.getParameters();
     }
     

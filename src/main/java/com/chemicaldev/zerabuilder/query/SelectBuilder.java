@@ -2,7 +2,7 @@ package com.chemicaldev.zerabuilder.query;
 
 import com.chemicaldev.zerabuilder.query.mysql.MySQLSelectBuilder;
 
-public interface SelectBuilder {
+public interface SelectBuilder extends ParameterizedBuilder{
     SelectBuilder select(String... columns);
 
     SelectBuilder from(String table);
@@ -21,5 +21,4 @@ public interface SelectBuilder {
 
     SelectBuilder limit(int limit);
 
-    Object[] getParameters();
 }

@@ -8,7 +8,7 @@ import com.chemicaldev.zerabuilder.query.mysql.MySQLSelectBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteInsertBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteSelectBuilder;
 
-public class InsertDSL {
+public class InsertDSL implements ExecutableDSL {
 
     private final ZeraBuilder _instance;
     private final InsertBuilder insertBuilder;
@@ -46,7 +46,12 @@ public class InsertDSL {
         return insertBuilder.toString();
     }
 
-    public Object[] getParams(){
+    public Object[] getParameters(){
         return insertBuilder.getParameters();
+    }
+
+    @Override
+    public ExecutionType type() {
+        return ExecutionType.UPDATE;
     }
 }

@@ -29,6 +29,9 @@ public class MySQLInsertBuilder implements InsertBuilder {
         if(columns == null || columns.length != values.length){
             throw new IllegalArgumentException("Number of values must match number of columns");
         }
+
+        parameters.clear(); // IMPORTANT! Clear first!
+
         for(Object v : values){
             parameters.add(v);
         }
