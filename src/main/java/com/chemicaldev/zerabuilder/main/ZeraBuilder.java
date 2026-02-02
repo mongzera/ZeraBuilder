@@ -1,6 +1,7 @@
 package com.chemicaldev.zerabuilder.main;
 
 import com.chemicaldev.zerabuilder.dsl.*;
+import com.chemicaldev.zerabuilder.dsl.datatype.Datatypes;
 
 public class ZeraBuilder {
     public SQLDialect dialect = SQLDialect.MYSQL;
@@ -13,6 +14,7 @@ public class ZeraBuilder {
 
     public ZeraBuilder(SQLDialect dialect){
         this.dialect = dialect;
+        this.type = new Datatypes(this);
     }
 
     public SelectDSL list (String... cols){
@@ -34,4 +36,6 @@ public class ZeraBuilder {
     public AlterDSL alterTable(String tableName){
         return alterDSL.table(tableName);
     }
+
+    public Datatypes type = new Datatypes(this);
 }
