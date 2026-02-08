@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="zera-builder-v0.4.2(build)">
+    <output-path>$PROJECT_DIR$/out/artifacts/zera_builder_v0_4_2_build_</output-path>
+    <root id="archive" name="zera-builder-v0.4.2(build).jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
