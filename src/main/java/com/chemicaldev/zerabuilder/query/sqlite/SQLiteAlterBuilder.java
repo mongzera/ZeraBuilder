@@ -21,13 +21,13 @@ public class SQLiteAlterBuilder implements AlterBuilder {
 
     @Override
     public SQLiteAlterBuilder dropColumn(String name) {
-        ZLog.warn("DROP COLUMN");
+        ZLog.warn("ALTER TABLE", "DROP COLUMN NOT SUPPORTED [SQLITE]");
         return this;
     }
 
     @Override
     public SQLiteAlterBuilder modifyColumn(String name, String type) {
-        ZLog.warn("MODIFY COLUMN");
+        ZLog.warn("ALTER TABLE", "MODIFY COLUMN NOT SUPPORTED [SQLITE]");
         return this;
     }
 
