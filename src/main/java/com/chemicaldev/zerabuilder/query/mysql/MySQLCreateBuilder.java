@@ -78,4 +78,13 @@ public class MySQLCreateBuilder implements CreateBuilder {
 
         return String.format("CREATE TABLE %s %s;", table, sj.toString());
     }
+
+    @Override
+    public MySQLCreateBuilder timestamps() {
+        // created_at
+        this.column("created_at", "TIMESTAMP", "DEFAULT CURRENT_TIMESTAMP");
+        // updated_at with auto-update
+        this.column("updated_at", "TIMESTAMP", "DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
+        return this;
+    }
 }

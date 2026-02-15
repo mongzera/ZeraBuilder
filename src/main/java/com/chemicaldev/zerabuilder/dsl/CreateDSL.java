@@ -1,5 +1,6 @@
 package com.chemicaldev.zerabuilder.dsl;
 
+import com.chemicaldev.zerabuilder.dsl.datatype.Datatypes;
 import com.chemicaldev.zerabuilder.main.SQLDialect;
 import com.chemicaldev.zerabuilder.main.ZeraBuilder;
 import com.chemicaldev.zerabuilder.query.CreateBuilder;
@@ -13,7 +14,7 @@ public class CreateDSL implements ExecutableDSL{
 
     public CreateDSL(ZeraBuilder _instance){
         this._instance = _instance;
-        this.createBuilder = switch (_instance.dialect){
+        this.createBuilder = switch (_instance.getDialect()){
             case MYSQL -> new MySQLCreateBuilder();
             case SQLITE -> new SQLiteCreateBuilder();
             case POSTRESQL -> null;
@@ -26,7 +27,7 @@ public class CreateDSL implements ExecutableDSL{
     }
 
     public CreateDSL column(String name, String type){
-        if(this._instance.dialect == SQLDialect.MYSQL) ((MySQLCreateBuilder) createBuilder).column(name, type);
+        if(this._instance.getDialect() == SQLDialect.MYSQL) ((MySQLCreateBuilder) createBuilder).column(name, type);
         else createBuilder.column(name + " " + type); // Replace this!
         return this;
     }
@@ -45,6 +46,13 @@ public class CreateDSL implements ExecutableDSL{
         createBuilder.unique(columns);
         return this;
     }
+
+    public CreateDSL timestamps(){
+        createBuilder.timestamps();
+        return this;
+    }
+
+
 
     public CreateBuilder build(){
         return createBuilder;

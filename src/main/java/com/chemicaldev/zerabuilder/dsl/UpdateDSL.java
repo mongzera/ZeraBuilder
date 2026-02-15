@@ -14,7 +14,7 @@ public class UpdateDSL {
 
     public UpdateDSL(ZeraBuilder _instance){
         this._instance = _instance;
-        this.updateBuilder = switch (_instance.dialect){
+        this.updateBuilder = switch (_instance.getDialect()){
             case MYSQL -> new MySQLUpdateBuilder();
             case SQLITE -> new SQLiteUpdateBuilder();
             case POSTRESQL -> null;

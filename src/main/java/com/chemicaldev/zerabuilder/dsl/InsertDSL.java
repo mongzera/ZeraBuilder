@@ -15,7 +15,7 @@ public class InsertDSL implements ExecutableDSL {
 
     public InsertDSL(ZeraBuilder _instance){
         this._instance = _instance;
-        this.insertBuilder = switch (_instance.dialect){
+        this.insertBuilder = switch (_instance.getDialect()){
             case MYSQL -> new MySQLInsertBuilder();
             case SQLITE -> new SQLiteInsertBuilder();
             case POSTRESQL -> null;

@@ -18,7 +18,7 @@ public class SelectDSL implements ExecutableDSL{
 
     public SelectDSL(ZeraBuilder _instance){
         this._instance = _instance;
-        this.selectBuilder = switch (_instance.dialect){
+        this.selectBuilder = switch (_instance.getDialect()){
             case MYSQL -> new MySQLSelectBuilder();
             case SQLITE -> new SQLiteSelectBuilder();
             case POSTRESQL -> null;

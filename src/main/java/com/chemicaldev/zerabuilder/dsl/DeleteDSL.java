@@ -12,7 +12,7 @@ public class DeleteDSL {
 
     public DeleteDSL(ZeraBuilder _instance){
         this._instance = _instance;
-        this.deleteBuilder = switch (_instance.dialect){
+        this.deleteBuilder = switch (_instance.getDialect()){
             case MYSQL -> new MySQLDeleteBuilder();
             case SQLITE -> new SQLiteDeleteBuilder();
             case POSTRESQL -> null;

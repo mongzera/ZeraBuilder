@@ -4,37 +4,43 @@ import com.chemicaldev.zerabuilder.dsl.*;
 import com.chemicaldev.zerabuilder.dsl.datatype.Datatypes;
 
 public class ZeraBuilder {
-    public SQLDialect dialect = SQLDialect.MYSQL;
-    private SelectDSL selectDSL = new SelectDSL(this);
-    private CreateDSL createDSL = new CreateDSL(this);
-    private UpdateDSL updateDSL = new UpdateDSL(this);
-    private InsertDSL insertDSL = new InsertDSL(this);
-    private DeleteDSL deleteDSL = new DeleteDSL(this);
-    private AlterDSL  alterDSL  = new AlterDSL (this);
+    private SQLDialect dialect   = SQLDialect.MYSQL;
 
     public ZeraBuilder(SQLDialect dialect){
+        this.setDialect(dialect);
+    }
+
+    public void setDialect(SQLDialect dialect){
         this.dialect = dialect;
         this.type = new Datatypes(this);
     }
 
+    public SQLDialect getDialect(){
+        return dialect;
+    }
+
     public SelectDSL list (String... cols){
-        return selectDSL.list(cols);
+        return new SelectDSL(this).list(cols);
     }
 
     public CreateDSL makeTable(String tableName){
-        return createDSL.table(tableName);
+        return new CreateDSL(this).table(tableName);
     }
 
     public InsertDSL insertTo(String tableName){
-        return insertDSL.into(tableName);
+        return new InsertDSL(this).into(tableName);
+    }
+
+    public UpdateDSL updateTable(String tableName){
+        return new UpdateDSL(this).table(tableName);
     }
 
     public DeleteDSL deleteFrom(String tableName){
-        return deleteDSL.from(tableName);
+        return new DeleteDSL(this).from(tableName);
     }
 
     public AlterDSL alterTable(String tableName){
-        return alterDSL.table(tableName);
+        return new AlterDSL (this).table(tableName);
     }
 
     public Datatypes type = new Datatypes(this);

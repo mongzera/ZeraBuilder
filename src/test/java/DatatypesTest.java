@@ -9,7 +9,6 @@ class DatatypesTest {
 
     private Datatypes dt(SQLDialect dialect) {
         ZeraBuilder builder = new ZeraBuilder(dialect);
-        builder.dialect = dialect;
         return new Datatypes(builder);
     }
 

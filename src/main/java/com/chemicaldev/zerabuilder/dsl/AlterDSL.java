@@ -13,7 +13,7 @@ public class AlterDSL {
 
     public AlterDSL(ZeraBuilder _instance){
         this._instance = _instance;
-        this.builder = switch (_instance.dialect){
+        this.builder = switch (_instance.getDialect()){
             case MYSQL -> new MySQLAlterBuilder();
             case SQLITE -> new SQLiteAlterBuilder();
             case POSTRESQL -> null;

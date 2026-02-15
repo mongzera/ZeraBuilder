@@ -9,7 +9,7 @@ public class Datatypes {
     private SQLDialect dialect;
 
     public Datatypes(ZeraBuilder builder){
-        dialect = builder.dialect;
+        dialect = builder.getDialect();
     }
 
     public String string(int len){
