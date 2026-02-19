@@ -58,18 +58,33 @@ public class ZeraExecutor implements AutoCloseable {
        Transactions
      ----------------------------- */
 
-    public void begin() throws SQLException {
+    private void begin() throws SQLException {
         connection.setAutoCommit(false);
     }
 
-    public void commit() throws SQLException {
+    private void commit() throws SQLException {
         connection.commit();
         connection.setAutoCommit(autoCommit);
     }
 
-    public void rollback() throws SQLException {
+    private void rollback() throws SQLException {
         connection.rollback();
         connection.setAutoCommit(autoCommit);
+    }
+
+    public void transaction(TransactionBlock block) {
+        try {
+            begin(); // disable auto-commit
+            block.run(this); // run user code
+            commit(); // commit if no exception
+        } catch (Exception e) {
+            try {
+                rollback(); // rollback if anything failed
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
+            throw new RuntimeException("Transaction failed", e);
+        }
     }
 
     /* -----------------------------
@@ -96,4 +111,10 @@ public class ZeraExecutor implements AutoCloseable {
             connection.close();
         }
     }
+
+    @FunctionalInterface
+    public interface TransactionBlock {
+        void run(ZeraExecutor executor) throws Exception;
+    }
+
 }

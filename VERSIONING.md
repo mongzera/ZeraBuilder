@@ -22,12 +22,12 @@
 | Category | Feature | Status | Notes |
 |----------|--------|--------|------|
 | Connection | Connection pooling | ⬜ | HikariCP / DBCP |
-| Executor | Transactions (`begin` / `commit` / `rollback`) | ⬜ | DSL-friendly |
+| Executor | Transactions (`begin` / `commit` / `rollback`) | ✅ | DSL-friendly |
 | Executor | Batch execution (`batchUpdate`) | ⬜ | Multi-row inserts/updates |
 | DSL | Named parameters (`:id`) | ⬜ | Map internally to indices |
 | DSL | Fluent join conditions | ⬜ | `.join().on()` chainable |
 | DSL | Pagination helpers | ⬜ | `.limit(n).offset(m)` |
-| Schema | Generic datatypes | ⬜ | e.g., `.column("name", DataType.STRING)`, `.column("id", DataType.INT)` — automatically mapped to dialect-specific types |
+| Schema | Generic datatypes | ✅ | e.g., `.column("name", DataType.STRING)`, `.column("id", DataType.INT)` — automatically mapped to dialect-specific types |
 | Schema | Nullable & default column values | ⬜ | `.nullable()`, `.default(value)` |
 | Schema | Computed / generated columns | ⬜ | e.g., `created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP` |
 | Testing | Extended stress tests | ⬜ | Higher volume inserts, query performance |
