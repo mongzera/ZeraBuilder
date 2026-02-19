@@ -21,7 +21,6 @@
 
 | Category | Feature | Status | Notes |
 |----------|--------|--------|------|
-| Connection | Connection pooling | ⬜ | HikariCP / DBCP |
 | Executor | Transactions (`begin` / `commit` / `rollback`) | ✅ | DSL-friendly |
 | Executor | Batch execution (`batchUpdate`) | ⬜ | Multi-row inserts/updates |
 | DSL | Named parameters (`:id`) | ⬜ | Map internally to indices |
@@ -40,6 +39,7 @@
 
 | Category | Feature | Status | Notes |
 |----------|--------|--------|------|
+| Connection | Connection pooling | ⬜ | HikariCP / DBCP |
 | Schema | Indexes | ⬜ | `.index(column1, column2)`, `.uniqueIndex()` |
 | Schema | Drop table / column | ⬜ | Safety checks, `IF EXISTS` |
 | Schema | Migrations / versioning | ⬜ | DSL-based migration files |
