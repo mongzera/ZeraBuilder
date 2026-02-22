@@ -27,7 +27,7 @@
 | DSL | Fluent join conditions | ⬜ | `.join().on()` chainable |
 | DSL | Pagination helpers | ⬜ | `.limit(n).offset(m)` |
 | Schema | Generic datatypes | ✅ | e.g., `.column("name", DataType.STRING)`, `.column("id", DataType.INT)` — automatically mapped to dialect-specific types |
-| Schema | Nullable & default column values | ⬜ | `.nullable()`, `.default(value)` |
+| Schema | Nullable & default column values | ✅ | `.nullable()`, `.default(value)` |
 | Schema | Computed / generated columns | ✅ | e.g., `created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP` |
 | Testing | Extended stress tests | ⬜ | Higher volume inserts, query performance |
 
