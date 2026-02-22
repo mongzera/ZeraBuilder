@@ -1,7 +1,7 @@
 package com.chemicaldev.zerabuilder.dsl;
 
 import com.chemicaldev.zerabuilder.main.ZeraBuilder;
-import com.chemicaldev.zerabuilder.query.DeleteBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.DeleteBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLDeleteBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteDeleteBuilder;
 

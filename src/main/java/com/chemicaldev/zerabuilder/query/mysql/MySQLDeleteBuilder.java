@@ -1,6 +1,6 @@
 package com.chemicaldev.zerabuilder.query.mysql;
 
-import com.chemicaldev.zerabuilder.query.DeleteBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.DeleteBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

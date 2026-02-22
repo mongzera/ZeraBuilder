@@ -1,7 +1,7 @@
 package com.chemicaldev.zerabuilder.dsl;
 
 import com.chemicaldev.zerabuilder.main.ZeraBuilder;
-import com.chemicaldev.zerabuilder.query.SelectBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.SelectBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLSelectBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteSelectBuilder;
 

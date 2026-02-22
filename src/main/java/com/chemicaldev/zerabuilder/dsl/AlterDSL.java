@@ -1,11 +1,9 @@
 package com.chemicaldev.zerabuilder.dsl;
 
 import com.chemicaldev.zerabuilder.main.ZeraBuilder;
-import com.chemicaldev.zerabuilder.query.AlterBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.AlterBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLAlterBuilder;
-import com.chemicaldev.zerabuilder.query.mysql.MySQLDeleteBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteAlterBuilder;
-import com.chemicaldev.zerabuilder.query.sqlite.SQLiteDeleteBuilder;
 
 public class AlterDSL {
     private final ZeraBuilder _instance;

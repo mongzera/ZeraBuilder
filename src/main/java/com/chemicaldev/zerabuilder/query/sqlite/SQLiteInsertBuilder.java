@@ -1,6 +1,6 @@
 package com.chemicaldev.zerabuilder.query.sqlite;
 
-import com.chemicaldev.zerabuilder.query.InsertBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.InsertBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

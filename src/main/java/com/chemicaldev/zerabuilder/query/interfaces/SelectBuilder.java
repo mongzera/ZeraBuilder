@@ -1,6 +1,4 @@
-package com.chemicaldev.zerabuilder.query;
-
-import com.chemicaldev.zerabuilder.query.mysql.MySQLSelectBuilder;
+package com.chemicaldev.zerabuilder.query.interfaces;
 
 public interface SelectBuilder extends ParameterizedBuilder{
     SelectBuilder select(String... columns);

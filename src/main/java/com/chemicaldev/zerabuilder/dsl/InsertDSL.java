@@ -1,12 +1,9 @@
 package com.chemicaldev.zerabuilder.dsl;
 
 import com.chemicaldev.zerabuilder.main.ZeraBuilder;
-import com.chemicaldev.zerabuilder.query.InsertBuilder;
-import com.chemicaldev.zerabuilder.query.SelectBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.InsertBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLInsertBuilder;
-import com.chemicaldev.zerabuilder.query.mysql.MySQLSelectBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteInsertBuilder;
-import com.chemicaldev.zerabuilder.query.sqlite.SQLiteSelectBuilder;
 
 public class InsertDSL implements ExecutableDSL {
 

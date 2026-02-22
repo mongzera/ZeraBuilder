@@ -1,10 +1,8 @@
 package com.chemicaldev.zerabuilder.dsl;
 
 import com.chemicaldev.zerabuilder.main.ZeraBuilder;
-import com.chemicaldev.zerabuilder.query.UpdateBuilder;
-import com.chemicaldev.zerabuilder.query.mysql.MySQLInsertBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.UpdateBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLUpdateBuilder;
-import com.chemicaldev.zerabuilder.query.sqlite.SQLiteInsertBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteUpdateBuilder;
 
 public class UpdateDSL {

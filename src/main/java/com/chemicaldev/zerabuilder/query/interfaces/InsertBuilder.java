@@ -1,4 +1,4 @@
-package com.chemicaldev.zerabuilder.query;
+package com.chemicaldev.zerabuilder.query.interfaces;
 
 public interface InsertBuilder extends ParameterizedBuilder{
     InsertBuilder into(String table);

@@ -4,44 +4,54 @@ import com.chemicaldev.zerabuilder.dsl.*;
 import com.chemicaldev.zerabuilder.dsl.datatype.Datatypes;
 
 public class ZeraBuilder {
-    private SQLDialect dialect   = SQLDialect.MYSQL;
 
-    public ZeraBuilder(SQLDialect dialect){
+    private SQLDialect dialect = SQLDialect.MYSQL;
+
+    public ZeraBuilder(SQLDialect dialect) {
         this.setDialect(dialect);
     }
 
-    public void setDialect(SQLDialect dialect){
+    public void setDialect(SQLDialect dialect) {
         this.dialect = dialect;
-        this.type = new Datatypes(this);
+        this.type = new Datatypes(); // no longer dialect-dependent
     }
 
-    public SQLDialect getDialect(){
+    public SQLDialect getDialect() {
         return dialect;
     }
 
-    public SelectDSL list (String... cols){
-        return new SelectDSL(this).list(cols);
+
+    public CreateDSL create() {
+        return new CreateDSL(this);
     }
 
-    public CreateDSL makeTable(String tableName){
+    public CreateDSL createTable(String tableName) {
         return new CreateDSL(this).table(tableName);
     }
 
-    public InsertDSL insertTo(String tableName){
+    /* =========================
+       OTHER DSL (unchanged)
+       ========================= */
+
+    public SelectDSL list(String... cols) {
+        return new SelectDSL(this).list(cols);
+    }
+
+    public InsertDSL insertTo(String tableName) {
         return new InsertDSL(this).into(tableName);
     }
 
-    public UpdateDSL updateTable(String tableName){
+    public UpdateDSL updateTable(String tableName) {
         return new UpdateDSL(this).table(tableName);
     }
 
-    public DeleteDSL deleteFrom(String tableName){
+    public DeleteDSL deleteFrom(String tableName) {
         return new DeleteDSL(this).from(tableName);
     }
 
-    public AlterDSL alterTable(String tableName){
-        return new AlterDSL (this).table(tableName);
+    public AlterDSL alterTable(String tableName) {
+        return new AlterDSL(this).table(tableName);
     }
 
-    public Datatypes type = new Datatypes(this);
+    public Datatypes type = new Datatypes(); // unchanged for now
 }

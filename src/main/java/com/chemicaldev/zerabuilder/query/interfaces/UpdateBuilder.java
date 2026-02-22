@@ -1,4 +1,4 @@
-package com.chemicaldev.zerabuilder.query;
+package com.chemicaldev.zerabuilder.query.interfaces;
 
 public interface UpdateBuilder extends ParameterizedBuilder{
     UpdateBuilder update(String table);

@@ -1,6 +1,6 @@
 package com.chemicaldev.zerabuilder.query.sqlite;
 
-import com.chemicaldev.zerabuilder.query.AlterBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.AlterBuilder;
 import com.chemicaldev.zerabuilder.query.ZLog;
 
 public class SQLiteAlterBuilder implements AlterBuilder {
