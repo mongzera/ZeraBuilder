@@ -1,6 +1,6 @@
 package com.chemicaldev.zerabuilder.query.sqlite;
 
-import com.chemicaldev.zerabuilder.query.AlterBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.AlterBuilder;
 import com.chemicaldev.zerabuilder.query.ZLog;
 
 public class SQLiteAlterBuilder implements AlterBuilder {
@@ -21,13 +21,13 @@ public class SQLiteAlterBuilder implements AlterBuilder {
 
     @Override
     public SQLiteAlterBuilder dropColumn(String name) {
-        ZLog.warn("DROP COLUMN");
+        ZLog.warn("ALTER TABLE", "DROP COLUMN NOT SUPPORTED [SQLITE]");
         return this;
     }
 
     @Override
     public SQLiteAlterBuilder modifyColumn(String name, String type) {
-        ZLog.warn("MODIFY COLUMN");
+        ZLog.warn("ALTER TABLE", "MODIFY COLUMN NOT SUPPORTED [SQLITE]");
         return this;
     }
 

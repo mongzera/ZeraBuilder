@@ -1,9 +1,9 @@
 package com.chemicaldev.zerabuilder.query;
 
 public class ZLog {
-    public static void warn(String feature){
+    public static void warn(String name, String message){
         System.out.println(
-                "[SQLite] ALTER TABLE does not support: " + feature
+                String.format("[%s]: %s", name, message)
         );
     }
 }

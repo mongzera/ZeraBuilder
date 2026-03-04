@@ -1,54 +1,76 @@
 package com.chemicaldev.zerabuilder.dsl;
 
 import com.chemicaldev.zerabuilder.main.ZeraBuilder;
-import com.chemicaldev.zerabuilder.query.DeleteBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.DeleteBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLDeleteBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteDeleteBuilder;
 
-public class DeleteDSL {
+/**
+ * DSL wrapper for building SQL DELETE queries.
+ *
+ * <p>Obtain via {@link ZeraBuilder#deleteFrom(String)} and chain methods fluently:
+ *
+ * <pre>{@code
+ * zb.deleteFrom("users")
+ *   .where(Conditions.eq("id", 42))
+ *   .toString();
+ * // → DELETE FROM users WHERE id = ?;
+ * }</pre>
+ */
+public class DeleteDSL implements ExecutableDSL {
 
     private final ZeraBuilder _instance;
     private final DeleteBuilder deleteBuilder;
 
-    public DeleteDSL(ZeraBuilder _instance){
+    public DeleteDSL(ZeraBuilder _instance) {
         this._instance = _instance;
-        this.deleteBuilder = switch (_instance.dialect){
+        this.deleteBuilder = switch (_instance.getDialect()) {
             case MYSQL -> new MySQLDeleteBuilder();
             case SQLITE -> new SQLiteDeleteBuilder();
-            case POSTRESQL -> null;
+            case POSTGRESQL -> throw new UnsupportedOperationException("PostgreSQL support not yet implemented");
         };
     }
 
-    public DeleteDSL from(String table){
+    /** Specifies the table to delete from. */
+    public DeleteDSL from(String table) {
         deleteBuilder.from(table);
         return this;
     }
 
-    public DeleteDSL where(Condition condition){
+    /** Sets the WHERE condition. */
+    public DeleteDSL where(Condition condition) {
         deleteBuilder.where(condition.toSql(), condition.getParameters());
         return this;
     }
 
-    public DeleteDSL and(Condition condition){
+    /** Appends an AND condition to the WHERE clause. */
+    public DeleteDSL and(Condition condition) {
         deleteBuilder.and(condition.toSql(), condition.getParameters());
         return this;
     }
 
-    public DeleteDSL or(Condition condition){
+    /** Appends an OR condition to the WHERE clause. */
+    public DeleteDSL or(Condition condition) {
         deleteBuilder.or(condition.toSql(), condition.getParameters());
         return this;
     }
 
-    public DeleteBuilder build(){
+    public DeleteBuilder build() {
         return deleteBuilder;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return deleteBuilder.toString();
     }
 
-    public Object[] getParams(){
+    @Override
+    public Object[] getParameters() {
         return deleteBuilder.getParameters();
+    }
+
+    @Override
+    public ExecutionType type() {
+        return ExecutionType.UPDATE;
     }
 }

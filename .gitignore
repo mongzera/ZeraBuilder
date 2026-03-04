@@ -36,3 +36,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+.idea/artifacts/ZeraBuilder_v_0_4_2_jar.xml
