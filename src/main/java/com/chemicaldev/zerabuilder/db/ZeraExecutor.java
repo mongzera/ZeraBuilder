@@ -28,7 +28,7 @@ public class ZeraExecutor implements AutoCloseable {
             throw new IllegalStateException("DSL is not a query");
         }
 
-        try (PreparedStatement ps = prepare(dsl);
+        try (PreparedStatement ps = connection.prepareStatement(dsl);
              ResultSet rs = ps.executeQuery()) {
 
             List<T> result = new ArrayList<>();
@@ -43,14 +43,12 @@ public class ZeraExecutor implements AutoCloseable {
        INSERT / UPDATE / DELETE / DDL
      ----------------------------- */
 
-    public int update(ExecutableDSL dsl) throws SQLException {
+    public int update(PreparedStatement ps) {
 
-        if (dsl.type() != ExecutionType.UPDATE) {
-            throw new IllegalStateException("DSL is not an update");
-        }
-
-        try (PreparedStatement ps = prepare(dsl)) {
+        try{
             return ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -91,25 +89,24 @@ public class ZeraExecutor implements AutoCloseable {
        Internal helpers
      ----------------------------- */
 
-    private PreparedStatement prepare(ExecutableDSL dsl) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(dsl);
-        bind(ps, dsl.getParameters());
-        return ps;
-    }
 
-    private void bind(PreparedStatement ps, Object[] params) throws SQLException {
+    public void bind(PreparedStatement ps, Object[] params) throws SQLException {
         if (params == null || params.length == 0) return;
         for(int i = 0; i < params.length; i++){
             ps.setObject(i + 1, params[i]);
         }
     }
 
-    private void setBatch(PreparedStatement ps, List<Object[]> batches) throws SQLException {
-        connection.setAutoCommit(false);
-        for(Object[] params : batches){
-            this.bind(ps, params);
-            ps.addBatch();
-        }
+
+    public void setBatch(PreparedStatement ps, List<Object[]> batches) throws SQLException {
+
+        this.transaction(batch -> {
+            for(Object[] params : batches){
+                this.bind(ps, params);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        });
 
     }
     @Override
