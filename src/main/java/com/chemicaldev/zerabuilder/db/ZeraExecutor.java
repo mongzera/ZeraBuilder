@@ -99,12 +99,19 @@ public class ZeraExecutor implements AutoCloseable {
 
     private void bind(PreparedStatement ps, Object[] params) throws SQLException {
         if (params == null || params.length == 0) return;
-        System.out.println(params.length);
         for(int i = 0; i < params.length; i++){
             ps.setObject(i + 1, params[i]);
         }
     }
 
+    private void setBatch(PreparedStatement ps, List<Object[]> batches) throws SQLException {
+        connection.setAutoCommit(false);
+        for(Object[] params : batches){
+            this.bind(ps, params);
+            ps.addBatch();
+        }
+
+    }
     @Override
     public void close() throws SQLException {
         if (!connection.isClosed()) {

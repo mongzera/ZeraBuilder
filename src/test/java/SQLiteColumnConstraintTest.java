@@ -1,5 +1,3 @@
-package com.chemicaldev.zerabuilder.query;
-
 import com.chemicaldev.zerabuilder.dsl.CreateDSL;
 import com.chemicaldev.zerabuilder.dsl.datatype.Datatypes;
 import com.chemicaldev.zerabuilder.main.SQLDialect;

@@ -58,8 +58,7 @@ class CreateBuilderTest {
                 .type(Datatypes.string(255))
                 .notNull()
                 .unique()
-                .done()
-                .build();
+                .done().toString();
 
         System.out.println(sql);
 

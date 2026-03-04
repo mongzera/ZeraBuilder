@@ -42,7 +42,7 @@ public abstract class AbstractCreateBuilder implements CreateBuilder {
     protected abstract String renderColumn(ColumnDefinition column);
 
     @Override
-    public String build() {
+    public String toString() {
         validate();
 
         StringBuilder sb = new StringBuilder();

@@ -29,22 +29,13 @@ public class InsertDSL implements ExecutableDSL {
         return this;
     }
 
-    public InsertDSL values(Object... values){
-        insertBuilder.values(values);
-        return this;
-    }
-
-    public InsertBuilder build(){
-        return insertBuilder;
-    }
-
     @Override
     public String toString(){
         return insertBuilder.toString();
     }
 
     public Object[] getParameters(){
-        return insertBuilder.getParameters();
+        return null;
     }
 
     @Override

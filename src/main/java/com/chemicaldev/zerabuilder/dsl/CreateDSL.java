@@ -30,12 +30,12 @@ public class CreateDSL implements ExecutableDSL {
     }
 
     public String build() {
-        return builder.build();
+        return builder.toString();
     }
 
     @Override
     public String toString() {
-        return builder.build();
+        return builder.toString();
     }
 
     @Override

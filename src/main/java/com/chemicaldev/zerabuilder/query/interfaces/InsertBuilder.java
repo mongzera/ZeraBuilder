@@ -1,7 +1,8 @@
 package com.chemicaldev.zerabuilder.query.interfaces;
 
-public interface InsertBuilder extends ParameterizedBuilder{
+import java.util.List;
+
+public interface InsertBuilder{
     InsertBuilder into(String table);
     InsertBuilder columns(String... columns);
-    InsertBuilder values(Object... values);
 }
