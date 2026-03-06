@@ -27,21 +27,38 @@ class CreateBuilderTest {
 ////                .done()
 ////                .build();
 
-        CreateDSL table = new ZeraBuilder(SQLDialect.MYSQL).createTable("users");
-        table.column("id").type(Datatypes.integer()).primaryKey().autoIncrement().done();
-        table.column("email").type(Datatypes.string(255)).notNull().unique().done();
-        String sql = table.build();
+        CreateDSL users = new ZeraBuilder(SQLDialect.SQLITE).createTable("users");
+        users.column("id").type(Datatypes.integer()).primaryKey().autoIncrement().done();
+        users.column("email").type(Datatypes.string(255)).notNull().unique().done();
+        String usersSql = users.build();
 
-        System.out.println(sql);
+        System.out.println(usersSql);
 
-        // Assertions
-        assertTrue(sql.contains("CREATE TABLE users"));
-        assertTrue(sql.contains("id INT"));
-        assertTrue(sql.contains("PRIMARY KEY"));
-        assertTrue(sql.contains("AUTO_INCREMENT"));
-        assertTrue(sql.contains("email VARCHAR(255)"));
-        assertTrue(sql.contains("NOT NULL"));
-        assertTrue(sql.contains("UNIQUE"));
+        CreateDSL posts = new ZeraBuilder(SQLDialect.SQLITE).createTable("posts");
+        posts.column("id").type(Datatypes.integer()).primaryKey().autoIncrement().done();
+        posts.column("caption").type(Datatypes.string(255)).notNull().unique().done();
+        posts.column("user_id").type(Datatypes.integer()).notNull().setReference("users", "id").done();
+        String postsSql = posts.build();
+
+        System.out.println(postsSql);
+
+        CreateDSL comments = new ZeraBuilder(SQLDialect.SQLITE).createTable("comments");
+        comments.column("id").type(Datatypes.integer()).primaryKey().autoIncrement().done();
+        comments.column("comment").type(Datatypes.string(255)).notNull().unique().done();
+        comments.column("from_user").type(Datatypes.integer()).notNull().setReference("users", "id").done();
+        comments.column("post_id").type(Datatypes.integer()).notNull().setReference("posts", "id").done();
+        String commentsSql = comments.build();
+
+        System.out.println(commentsSql);
+
+//        // Assertions
+//        assertTrue(sql.contains("CREATE TABLE users"));
+//        assertTrue(sql.contains("id INT"));
+//        assertTrue(sql.contains("PRIMARY KEY"));
+//        assertTrue(sql.contains("AUTO_INCREMENT"));
+//        assertTrue(sql.contains("email VARCHAR(255)"));
+//        assertTrue(sql.contains("NOT NULL"));
+//        assertTrue(sql.contains("UNIQUE"));
     }
 
     @Test

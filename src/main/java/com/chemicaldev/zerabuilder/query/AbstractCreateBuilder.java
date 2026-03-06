@@ -48,9 +48,28 @@ public abstract class AbstractCreateBuilder implements CreateBuilder {
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE ").append(table).append(" (\n");
 
+
+        ArrayList<ColumnDefinition> foreignKeys = new ArrayList<>();
+        // Column Definitions
         for (int i = 0; i < columns.size(); i++) {
+            if(columns.get(i).isForeignKey()) foreignKeys.add(columns.get(i));
             sb.append("  ").append(renderColumn(columns.get(i)));
-            if (i < columns.size() - 1) sb.append(",");
+            if (i < columns.size() - 1 || !foreignKeys.isEmpty()) sb.append(",");
+            sb.append("\n");
+        }
+
+
+
+        //Foreign Keys
+        for (int i = 0; i < foreignKeys.size(); i++) {
+            ColumnDefinition foreignKeyColumn = foreignKeys.get(i);
+
+            String[] reference = foreignKeyColumn.getReference().split("\\.");
+            String refTableName = reference[0];
+            String refColumnName = reference[1];
+
+            sb.append("  ").append(String.format("FOREIGN KEY (%s) REFERENCES %s(%s)", foreignKeyColumn.getName(), refTableName, refColumnName));
+            if (i < foreignKeys.size() - 1) sb.append(",");
             sb.append("\n");
         }
 

@@ -11,6 +11,8 @@ public class ColumnDefinition {
     private boolean unique;
     private boolean autoIncrement;
     private String defaultValue;
+    private boolean isForeignKey;
+    private String reference = "";
 
     public ColumnDefinition(String name) {
         this.name = name;
@@ -22,7 +24,10 @@ public class ColumnDefinition {
     public boolean isPrimaryKey() { return primaryKey; }
     public boolean isUnique() { return unique; }
     public boolean isAutoIncrement() { return autoIncrement; }
+    public boolean isForeignKey() { return isForeignKey; }
     public String getDefaultValue() { return defaultValue; }
+    public String getReference() { return reference; }
+
 
     public ColumnDefinition type(DataType type) {
         this.type = type;
@@ -51,6 +56,12 @@ public class ColumnDefinition {
 
     public ColumnDefinition defaultValue(String value) {
         this.defaultValue = value;
+        return this;
+    }
+
+    public ColumnDefinition setReference(String reference){
+        this.isForeignKey = true;
+        this.reference = reference;
         return this;
     }
 }

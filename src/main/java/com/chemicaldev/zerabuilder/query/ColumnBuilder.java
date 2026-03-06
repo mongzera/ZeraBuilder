@@ -44,6 +44,16 @@ public class ColumnBuilder {
         return this;
     }
 
+    public ColumnBuilder setReference(String table, String column){
+        return this.setReference(table.trim() + "." + column.trim());
+    }
+
+    public ColumnBuilder setReference(String reference){
+        this.column.setReference(reference);
+        return this;
+    }
+
+
     public AbstractCreateBuilder done() {
         parent.addColumn(column);
         return parent;
