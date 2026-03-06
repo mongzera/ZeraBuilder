@@ -64,8 +64,9 @@ class CreateBuilderTest {
     @Test
     void sqlite_create_table_generates_valid_sql() {
 
-        CreateDSL dsl = new ZeraBuilder(SQLDialect.SQLITE).createTable("_collection_metadata");
+        CreateDSL dsl = new ZeraBuilder(SQLDialect.MYSQL).createTable("_collection_metadata");
         dsl.column("table_name").type(Datatypes.string()).notNull().done();
+        dsl.timestamps();
 
         System.out.println(dsl.build());
 

@@ -3,6 +3,7 @@ package com.chemicaldev.zerabuilder.query;
 
 import com.chemicaldev.zerabuilder.dsl.datatype.DataType;
 import com.chemicaldev.zerabuilder.dsl.table.ColumnDefinition;
+import com.chemicaldev.zerabuilder.main.SQLDialect;
 
 public class ColumnBuilder {
 
@@ -45,6 +46,7 @@ public class ColumnBuilder {
     }
 
     public ColumnBuilder onUpdate(String value) {
+        if(parent.dialect == SQLDialect.SQLITE) return this;
         column.onUpdate(value);
         return this;
     }
