@@ -1,6 +1,7 @@
 package com.chemicaldev.zerabuilder.query;
 
 
+import com.chemicaldev.zerabuilder.dsl.datatype.Datatypes;
 import com.chemicaldev.zerabuilder.dsl.table.ColumnDefinition;
 import com.chemicaldev.zerabuilder.main.SQLDialect;
 import com.chemicaldev.zerabuilder.query.interfaces.CreateBuilder;
@@ -13,6 +14,7 @@ public abstract class AbstractCreateBuilder implements CreateBuilder {
     protected final SQLDialect dialect;
     protected String table;
     protected final List<ColumnDefinition> columns = new ArrayList<>();
+    protected boolean hasTimeStamp = false;
 
     protected AbstractCreateBuilder(SQLDialect dialect) {
         this.dialect = dialect;
@@ -21,6 +23,7 @@ public abstract class AbstractCreateBuilder implements CreateBuilder {
     @Override
     public CreateBuilder table(String name) {
         this.table = name;
+        this.column("uuid").type(Datatypes.string(36)).primaryKey().notNull().unique();
         return this;
     }
 
@@ -31,6 +34,15 @@ public abstract class AbstractCreateBuilder implements CreateBuilder {
 
     protected void addColumn(ColumnDefinition column) {
         columns.add(column);
+    }
+
+    @Override
+    public CreateBuilder addTimestamp(){
+        if(hasTimeStamp) return this;
+        hasTimeStamp = true;
+        this.column("created_at").type(Datatypes.datetime()).defaultValue("CURRENT_TIMESTAMP").done();
+        this.column("updated_at").type(Datatypes.datetime()).defaultValue("CURRENT_TIMESTAMP").onUpdate("CURRENT_TIMESTAMP").done();
+        return this;
     }
 
     protected void validate() {
@@ -46,7 +58,7 @@ public abstract class AbstractCreateBuilder implements CreateBuilder {
         validate();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE ").append(table).append(" (\n");
+        sb.append("CREATE TABLE IF NOT EXISTS ").append(table).append(" (\n");
 
 
         ArrayList<ColumnDefinition> foreignKeys = new ArrayList<>();
@@ -58,22 +70,30 @@ public abstract class AbstractCreateBuilder implements CreateBuilder {
             sb.append("\n");
         }
 
-
-
         //Foreign Keys
         for (int i = 0; i < foreignKeys.size(); i++) {
             ColumnDefinition foreignKeyColumn = foreignKeys.get(i);
 
-            String[] reference = foreignKeyColumn.getReference().split("\\.");
-            String refTableName = reference[0];
-            String refColumnName = reference[1];
+            String reference = foreignKeyColumn.getReference();
 
-            sb.append("  ").append(String.format("FOREIGN KEY (%s) REFERENCES %s(%s)", foreignKeyColumn.getName(), refTableName, refColumnName));
+            sb.append("  ").append(String.format("FOREIGN KEY (%s) REFERENCES %s(uuid)", foreignKeyColumn.getName(), reference));
             if (i < foreignKeys.size() - 1) sb.append(",");
             sb.append("\n");
         }
 
         sb.append(");");
+
+        /// Add Triggers for SQLite ON UPDATE ///
+
+        if(dialect == SQLDialect.SQLITE) sb.append(String.format("\nCREATE TRIGGER %s_set_updated_at\n" +
+                "AFTER UPDATE ON %s\n" +
+                "FOR EACH ROW\n" +
+                "WHEN NEW.updated_at = OLD.updated_at\n" +
+                "BEGIN\n" +
+                "    UPDATE %s\n" +
+                "    SET updated_at = CURRENT_TIMESTAMP\n" +
+                "    WHERE uuid = OLD.uuid;\n" +
+                "END;", this.table, this.table, this.table));
 
         return sb.toString();
     }

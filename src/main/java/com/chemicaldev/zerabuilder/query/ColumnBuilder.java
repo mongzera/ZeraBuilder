@@ -44,8 +44,9 @@ public class ColumnBuilder {
         return this;
     }
 
-    public ColumnBuilder setReference(String table, String column){
-        return this.setReference(table.trim() + "." + column.trim());
+    public ColumnBuilder onUpdate(String value) {
+        column.onUpdate(value);
+        return this;
     }
 
     public ColumnBuilder setReference(String reference){

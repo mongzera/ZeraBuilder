@@ -25,7 +25,9 @@ public class MySQLCreateBuilder extends AbstractCreateBuilder {
             sb.append(" DEFAULT ").append(col.getDefaultValue());
         if (col.isUnique()) sb.append(" UNIQUE");
         if (col.isPrimaryKey()) sb.append(" PRIMARY KEY");
-
+        if(col.getOnUpdateValue() != null){
+            sb.append(" ON UPDATE ").append(col.getOnUpdateValue());
+        }
         return sb.toString();
     }
 }

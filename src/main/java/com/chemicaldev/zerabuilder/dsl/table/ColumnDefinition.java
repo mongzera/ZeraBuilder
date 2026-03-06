@@ -13,6 +13,7 @@ public class ColumnDefinition {
     private String defaultValue;
     private boolean isForeignKey;
     private String reference = "";
+    private String onUpdateValue;
 
     public ColumnDefinition(String name) {
         this.name = name;
@@ -26,6 +27,7 @@ public class ColumnDefinition {
     public boolean isAutoIncrement() { return autoIncrement; }
     public boolean isForeignKey() { return isForeignKey; }
     public String getDefaultValue() { return defaultValue; }
+    public String getOnUpdateValue() { return onUpdateValue; }
     public String getReference() { return reference; }
 
 
@@ -59,9 +61,14 @@ public class ColumnDefinition {
         return this;
     }
 
+    public ColumnDefinition onUpdate(String value){
+        this.onUpdateValue = value;
+        return this;
+    }
+
     public ColumnDefinition setReference(String reference){
         this.isForeignKey = true;
-        this.reference = reference;
+        this.reference = reference.trim();
         return this;
     }
 }

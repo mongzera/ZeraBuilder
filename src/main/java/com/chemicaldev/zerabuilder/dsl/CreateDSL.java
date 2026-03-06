@@ -5,6 +5,7 @@ import com.chemicaldev.zerabuilder.main.SQLDialect;
 import com.chemicaldev.zerabuilder.main.ZeraBuilder;
 import com.chemicaldev.zerabuilder.query.AbstractCreateBuilder;
 import com.chemicaldev.zerabuilder.query.ColumnBuilder;
+import com.chemicaldev.zerabuilder.query.interfaces.CreateBuilder;
 import com.chemicaldev.zerabuilder.query.mysql.MySQLCreateBuilder;
 import com.chemicaldev.zerabuilder.query.sqlite.SQLiteCreateBuilder;
 
@@ -27,6 +28,10 @@ public class CreateDSL implements ExecutableDSL {
 
     public ColumnBuilder column(String name) {
         return builder.column(name);
+    }
+
+    public CreateBuilder timestamps(){
+        return builder.addTimestamp();
     }
 
     public String build() {

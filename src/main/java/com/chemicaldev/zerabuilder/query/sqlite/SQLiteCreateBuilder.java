@@ -33,6 +33,10 @@ public class SQLiteCreateBuilder extends AbstractCreateBuilder {
 
         if (col.isUnique()) sb.append(" UNIQUE");
 
+        if(col.getOnUpdateValue() != null){
+            sb.append(" ON UPDATE ").append(col.getOnUpdateValue());
+        }
+
         return sb.toString();
     }
 }
