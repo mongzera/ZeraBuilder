@@ -23,7 +23,7 @@ public abstract class AbstractCreateBuilder implements CreateBuilder {
     @Override
     public CreateBuilder table(String name) {
         this.table = name;
-        this.column("uuid").type(Datatypes.string(36)).primaryKey().notNull().unique();
+        this.column("uuid").type(Datatypes.string(36)).primaryKey().notNull().unique().done();
         return this;
     }
 
