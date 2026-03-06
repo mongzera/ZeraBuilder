@@ -85,7 +85,7 @@ public abstract class AbstractCreateBuilder implements CreateBuilder {
 
         /// Add Triggers for SQLite ON UPDATE ///
 
-        if(dialect == SQLDialect.SQLITE) sb.append(String.format("\nCREATE TRIGGER %s_set_updated_at\n" +
+        if(dialect == SQLDialect.SQLITE && hasTimeStamp) sb.append(String.format("\nCREATE TRIGGER %s_set_updated_at\n" +
                 "AFTER UPDATE ON %s\n" +
                 "FOR EACH ROW\n" +
                 "WHEN NEW.updated_at = OLD.updated_at\n" +

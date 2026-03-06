@@ -64,15 +64,10 @@ class CreateBuilderTest {
     @Test
     void sqlite_create_table_generates_valid_sql() {
 
-        String sql = new ZeraBuilder(SQLDialect.SQLITE)
-                .createTable("users")
-                .column("email")
-                .type(Datatypes.string(255))
-                .notNull()
-                .unique()
-                .done().toString();
+        CreateDSL dsl = new ZeraBuilder(SQLDialect.SQLITE).createTable("_collection_metadata");
+        dsl.column("table_name").type(Datatypes.string()).notNull().done();
 
-        System.out.println(sql);
+        System.out.println(dsl.build());
 
 //        // SQLite handles primary key differently
 //        assertTrue(sql.contains("CREATE TABLE users"));
