@@ -13,6 +13,17 @@ public class Datatypes {
     public static DataType integer() {
         return new IntegerType();
     }
+    public static DataType realDouble() {
+        return new DoubleType();
+    }
+
+    public static DataType realFloat() {
+        return new FloatType();
+    }
+
+    public static DataType real() {
+        return new RealType();
+    }
 
     public static DataType date() {
         return new DateType();
