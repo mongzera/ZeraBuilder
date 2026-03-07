@@ -34,9 +34,11 @@ class CreateBuilderTest {
 
         System.out.println(usersSql);
 
-        CreateDSL posts = new ZeraBuilder(SQLDialect.SQLITE).createTable("posts");
+        CreateDSL posts = new ZeraBuilder(SQLDialect.MYSQL).createTable("posts");
         posts.column("caption").type(Datatypes.string(255)).notNull().unique().done();
         posts.column("user_id").type(Datatypes.integer()).notNull().setReference("users").done();
+        posts.column("visible").type(Datatypes.bool()).notNull().defaultValue(false).done();
+        posts.column("what").type(Datatypes.string()).notNull().defaultValue("idkwhat").done();
         posts.timestamps();
         String postsSql = posts.build();
 

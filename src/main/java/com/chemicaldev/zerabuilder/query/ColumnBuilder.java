@@ -40,7 +40,7 @@ public class ColumnBuilder {
         return this;
     }
 
-    public ColumnBuilder defaultValue(String value) {
+    public ColumnBuilder defaultValue(Object value) {
         column.defaultValue(value);
         return this;
     }
