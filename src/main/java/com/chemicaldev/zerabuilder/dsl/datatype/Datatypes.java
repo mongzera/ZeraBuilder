@@ -21,4 +21,6 @@ public class Datatypes {
     public static DataType datetime() {
         return new DateTimeType();
     }
+
+    public static DataType bool() { return new BooleanType(); }
 }
